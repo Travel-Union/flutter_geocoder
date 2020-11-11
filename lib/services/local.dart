@@ -9,8 +9,10 @@ import 'package:geocoder/services/base.dart';
 class LocalGeocoding implements Geocoding {
   static const MethodChannel _channel = MethodChannel('github.com/aloisdeniel/geocoder');
 
-  Future<List<Address>> findAddressesFromCoordinates(Coordinates coordinates) async  {
-    Iterable addresses = await _channel.invokeMethod('findAddressesFromCoordinates', coordinates.toMap());
+  Future<List<Address>> findAddressesFromCoordinates(Coordinates coordinates, { String locale = "en_US" }) async  {
+    final request = coordinates.toMap();
+    request["locale"] = locale; //iOS only
+    Iterable addresses = await _channel.invokeMethod('findAddressesFromCoordinates', request);
     return addresses.map((x) => Address.fromMap(x)).toList();
   }
 

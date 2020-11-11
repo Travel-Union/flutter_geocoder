@@ -2,6 +2,7 @@ package com.aloisdeniel.geocoder;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class GeocoderPlugin implements MethodCallHandler {
 
   public GeocoderPlugin(Context context) {
 
-    this.geocoder = new Geocoder(context);
+    this.geocoder = new Geocoder(context, Locale.US);
   }
 
   /**
