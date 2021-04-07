@@ -61,7 +61,7 @@ class ErrorLabel extends StatelessWidget {
 
   final TextStyle descriptionStyle;
 
-  ErrorLabel(this.name, String text, { double fontSize = 9.0, bool isBold = false}) :
+  ErrorLabel(this.name, String? text, { double fontSize = 9.0, bool isBold = false}) :
       this.text = text ?? "Unknown $name",
       this.descriptionStyle = new TextStyle(fontSize: fontSize, fontWeight: isBold ? FontWeight.bold : FontWeight.normal, color: text == null ? Colors.red : Colors.black);
 

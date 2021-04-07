@@ -14,17 +14,15 @@ class MyApp extends StatefulWidget {
 
 class AppState extends InheritedWidget {
   const AppState({
-    Key key,
-    this.mode,
-    Widget child,
-  }) : assert(mode != null),
-        assert(child != null),
-        super(key: key, child: child);
+    Key? key,
+    required this.mode,
+    required Widget child,
+  }) : super(key: key, child: child);
 
   final Geocoding mode;
 
-  static AppState of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(AppState);
+  static AppState? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<AppState>();
   }
 
   @override
@@ -45,7 +43,7 @@ class _GeocodeViewState extends State<GeocodeView> {
 
   final TextEditingController _controller = new TextEditingController();
 
-  List<Address> results = [];
+  List<Address>? results = [];
 
   bool isLoading = false;
 
@@ -56,8 +54,8 @@ class _GeocodeViewState extends State<GeocodeView> {
     });
 
     try{
-      var geocoding = AppState.of(context).mode;
-      var results = await geocoding.findAddressesFromQuery(_controller.text);
+      var geocoding = AppState.of(context)?.mode;
+      var results = await geocoding?.findAddressesFromQuery(_controller.text);
       this.setState(() {
         this.results = results;
       });
@@ -92,7 +90,8 @@ class _GeocodeViewState extends State<GeocodeView> {
               ),
             ),
           ),
-          new Expanded(child: new AddressListView(this.isLoading, this.results)),
+          if(this.results != null)
+          new Expanded(child: new AddressListView(this.isLoading, this.results!)),
         ]);
   }
 }
@@ -112,7 +111,7 @@ class _ReverseGeocodeViewState extends State<ReverseGeocodeView> {
 
   _ReverseGeocodeViewState();
 
-  List<Address> results = [];
+  List<Address>? results = [];
 
   bool isLoading = false;
 
@@ -124,10 +123,10 @@ class _ReverseGeocodeViewState extends State<ReverseGeocodeView> {
     });
 
     try{
-      var geocoding = AppState.of(context).mode;
+      var geocoding = AppState.of(context)?.mode;
       var longitude = double.parse(_controllerLongitude.text);
       var latitude = double.parse(_controllerLatitude.text);
-      var results = await geocoding.findAddressesFromCoordinates(new Coordinates(latitude, longitude));
+      var results = await geocoding?.findAddressesFromCoordinates(new Coordinates(latitude, longitude));
       this.setState(() {
         this.results = results;
       });
@@ -170,7 +169,8 @@ class _ReverseGeocodeViewState extends State<ReverseGeocodeView> {
               ),
             ),
           ),
-          new Expanded(child: new AddressListView(this.isLoading, this.results)),
+          if(this.results != null)
+          new Expanded(child: new AddressListView(this.isLoading, this.results!)),
         ]);
   }
 }

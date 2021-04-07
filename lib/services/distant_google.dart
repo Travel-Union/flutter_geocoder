@@ -12,7 +12,7 @@ class GoogleGeocoding implements Geocoding {
   static const _host = 'https://maps.google.com/maps/api/geocode/json';
 
   final String apiKey;
-  final String language;
+  final String? language;
 
   final HttpClient _httpClient;
 
@@ -20,18 +20,18 @@ class GoogleGeocoding implements Geocoding {
     _httpClient = HttpClient(),
     assert(apiKey != null, "apiKey must not be null");
 
-  Future<List<Address>> findAddressesFromCoordinates(Coordinates coordinates) async  {
-    final url = '$_host?key=$apiKey${language != null ? '&language='+language : ''}&latlng=${coordinates.latitude},${coordinates.longitude}';
+  Future<List<Address>?> findAddressesFromCoordinates(Coordinates coordinates) async  {
+    final url = '$_host?key=$apiKey${language != null ? '&language='+language! : ''}&latlng=${coordinates.latitude},${coordinates.longitude}';
     return _send(url);
   }
 
-  Future<List<Address>> findAddressesFromQuery(String address) async {
+  Future<List<Address>?> findAddressesFromQuery(String address) async {
     var encoded = Uri.encodeComponent(address);
     final url = '$_host?key=$apiKey&address=$encoded';
     return _send(url);
   }
 
-  Future<List<Address>> _send(String url) async {
+  Future<List<Address>?> _send(String url) async {
     //print("Sending $url...");
     final uri = Uri.parse(url);
     final request = await this._httpClient.getUrl(uri);
@@ -50,7 +50,7 @@ class GoogleGeocoding implements Geocoding {
                   .toList();
   }
 
-  Map _convertCoordinates(dynamic geometry) {
+  Map? _convertCoordinates(dynamic geometry) {
     if(geometry == null)
       return null;
 

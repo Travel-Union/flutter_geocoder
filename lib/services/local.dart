@@ -12,12 +12,12 @@ class LocalGeocoding implements Geocoding {
   Future<List<Address>> findAddressesFromCoordinates(Coordinates coordinates, { String locale = "en_US" }) async  {
     final request = coordinates.toMap();
     request["locale"] = locale; //iOS only
-    Iterable addresses = await _channel.invokeMethod('findAddressesFromCoordinates', request);
+    Iterable addresses = await (_channel.invokeMethod('findAddressesFromCoordinates', request) as FutureOr<Iterable<dynamic>>);
     return addresses.map((x) => Address.fromMap(x)).toList();
   }
 
   Future<List<Address>> findAddressesFromQuery(String address) async {
-    Iterable coordinates = await _channel.invokeMethod('findAddressesFromQuery', { "address" : address });
+    Iterable coordinates = await (_channel.invokeMethod('findAddressesFromQuery', { "address" : address }) as FutureOr<Iterable<dynamic>>);
     return coordinates.map((x) => Address.fromMap(x)).toList();
   }
 }

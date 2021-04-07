@@ -4,10 +4,10 @@ import 'package:meta/meta.dart';
 class Coordinates {
 
   /// The geographic coordinate that specifies the north–south position of a point on the Earth's surface.
-  final double latitude;
+  final double? latitude;
 
   /// The geographic coordinate that specifies the east-west position of a point on the Earth's surface.
-  final double longitude;
+  final double? longitude;
 
   Coordinates(this.latitude, this.longitude);
 
@@ -28,40 +28,40 @@ class Coordinates {
 @immutable
 class Address {
   /// The geographic coordinates.
-  final Coordinates coordinates;
+  final Coordinates? coordinates;
 
   /// The formatted address with all lines.
-  final String addressLine;
+  final String? addressLine;
 
   /// The localized country name of the address.
-  final String countryName;
+  final String? countryName;
 
   /// The country code of the address.
-  final String countryCode;
+  final String? countryCode;
 
   /// The feature name of the address.
-  final String featureName;
+  final String? featureName;
 
   /// The postal code.
-  final String postalCode;
+  final String? postalCode;
 
   /// The administrative area name of the address
-  final String adminArea;
+  final String? adminArea;
 
   /// The sub-administrative area name of the address
-  final String subAdminArea;
+  final String? subAdminArea;
 
   /// The locality of the address
-  final String locality;
+  final String? locality;
 
   /// The sub-locality of the address
-  final String subLocality;
+  final String? subLocality;
 
   /// The thoroughfare name of the address
-  final String thoroughfare;
+  final String? thoroughfare;
 
   /// The sub-thoroughfare name of the address
-  final String subThoroughfare;
+  final String? subThoroughfare;
 
   Address({this.coordinates, this.addressLine, this.countryName, this.countryCode, this.featureName, this.postalCode, this.adminArea, this.subAdminArea, this.locality, this.subLocality, this.thoroughfare, this.subThoroughfare});
 
@@ -82,7 +82,7 @@ class Address {
 
   /// Creates a map from the address properties.
   Map toMap() => {
-    "coordinates": this.coordinates.toMap(),
+    "coordinates": this.coordinates!.toMap(),
     "addressLine": this.addressLine,
     "countryName": this.countryName,
     "countryCode": this.countryCode,
